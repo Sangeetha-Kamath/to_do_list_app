@@ -41,6 +41,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: "TaskFlow",
       theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.system,
       getPages: AppPages.routes,
       initialBinding: AuthBinding(),
       initialRoute: initialRoute

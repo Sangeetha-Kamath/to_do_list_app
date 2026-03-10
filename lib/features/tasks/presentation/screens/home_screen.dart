@@ -65,134 +65,137 @@ class HomeScreen extends StatelessWidget {
       ),
 
       body: SafeArea(
-        child: Obx(
-          () => RefreshIndicator(
-            onRefresh: taskController.fetchTasks,
-            child: CustomScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              slivers: [
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: AppSpacing.screenPadding,
+  child: Obx(
+    () => Column(
+      children: [
+        /// HEADER (FIXED)
+        Padding(
+          padding: AppSpacing.screenPadding,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    '${_getGreeting()},',
-                                    style: textTheme.bodyMedium?.copyWith(
-                                      color: AppColors.textSecondary,
-                                    ),
-                                  ),
-                                  AppSpacing.gapXs,
-                                  Text(
-                                    userName,
-                                    style: textTheme.headlineLarge?.copyWith(
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                  AppSpacing.gapSm,
-                                  Text(
-                                    _formatDate(),
-                                    style: textTheme.bodyMedium?.copyWith(
-                                      color: AppColors.textSecondary,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            IconButton(
-                              onPressed: () {
-                                DialogHelper.showConfirmation(
-                                  title: "Logout",
-                                  message: "Are you sure you want to logout?",
-                                  confirmText: "Logout",
-                                  isDanger: true,
-                                  onConfirm: authController.logout,
-                                );
-                              },
-                              icon: const Icon(Icons.logout_rounded),
-                              tooltip: 'Logout',
-                            ),
-                          ],
-                        ),
-                        AppSpacing.gapXxl,
-                        TaskSummaryCard(
-                          totalTasks: taskController.totalTasks,
-                          completedTasks: taskController.completedTasks,
-                          pendingTasks: taskController.pendingTasks,
-                        ),
-                        AppSpacing.gapXxl,
                         Text(
-                          'My Tasks',
-                          style: textTheme.titleLarge?.copyWith(
+                          '${_getGreeting()},',
+                          style: textTheme.bodyMedium?.copyWith(
+                            color: AppColors.textSecondary,
+                          ),
+                        ),
+                        AppSpacing.gapXs,
+                        Text(
+                          userName,
+                          style: textTheme.headlineLarge?.copyWith(
                             fontWeight: FontWeight.w700,
                           ),
                         ),
-                        AppSpacing.gapMd,
-                        const TaskFilterChips(),
-                        AppSpacing.gapLg,
+                        AppSpacing.gapSm,
+                        Text(
+                          _formatDate(),
+                          style: textTheme.bodyMedium?.copyWith(
+                            color: AppColors.textSecondary,
+                          ),
+                        ),
                       ],
                     ),
                   ),
-                ),
-                if (taskController.isLoading.value &&
-                    taskController.tasks.isEmpty)
-                  const SliverFillRemaining(
-                    hasScrollBody: false,
-                    child: Center(child: CircularProgressIndicator()),
-                  )
-                else if (taskController.filteredTasks.isEmpty)
-                  SliverFillRemaining(
-                    hasScrollBody: false,
-                    child: EmptyTaskView(
-                      onAddTask: () {
-                        taskController.clearForm();
-                        Get.toNamed(AppRoutes.editTask);
-                      },
-                    ),
-                  )
-                else
-                  SliverPadding(
-                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 100),
-                    sliver: SliverList.separated(
-                      itemCount: taskController.filteredTasks.length,
-                      itemBuilder: (context, index) {
-                        final task = taskController.filteredTasks[index];
-
-                        return TaskCard(
-                          task: task,
-                          onToggle: () => taskController.toggleTaskStatus(task),
-                          onEdit: () {
-                            taskController.setEditingTask(task);
-                            Get.toNamed(AppRoutes.editTask);
-                          },
-                          onDelete: () {
-                            DialogHelper.showConfirmation(
-                              title: "Delete Task",
-                              message: "This task will be permanently deleted.",
-                              confirmText: "Delete",
-                              isDanger: true,
-                              onConfirm: () =>
-                                  taskController.deleteTask(task.id),
-                            );
-                          },
-                        );
-                      },
-                      separatorBuilder: (_, __) => AppSpacing.gapLg,
-                    ),
+                  IconButton(
+                    onPressed: () {
+                      DialogHelper.showConfirmation(
+                        title: "Logout",
+                        message: "Are you sure you want to logout?",
+                        confirmText: "Logout",
+                        isDanger: true,
+                        onConfirm: authController.logout,
+                      );
+                    },
+                    icon: const Icon(Icons.logout_rounded),
                   ),
-              ],
-            ),
+                ],
+              ),
+
+              AppSpacing.gapXxl,
+
+              TaskSummaryCard(
+                totalTasks: taskController.totalTasks,
+                completedTasks: taskController.completedTasks,
+                pendingTasks: taskController.pendingTasks,
+              ),
+
+              AppSpacing.gapXxl,
+
+              Text(
+                'My Tasks',
+                style: textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+
+              AppSpacing.gapMd,
+
+              const TaskFilterChips(),
+
+              AppSpacing.gapMd,
+            ],
           ),
         ),
-      ),
-    );
+
+        /// TASK LIST (SCROLLABLE)
+        Expanded(
+          child: RefreshIndicator(
+            onRefresh: taskController.fetchTasks,
+            child: taskController.isLoading.value &&
+                    taskController.tasks.isEmpty
+                ? const Center(child: CircularProgressIndicator())
+
+                : taskController.filteredTasks.isEmpty
+                    ? EmptyTaskView(
+                        onAddTask: () {
+                          taskController.clearForm();
+                          Get.toNamed(AppRoutes.editTask);
+                        },
+                      )
+
+                    : ListView.separated(
+                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 100),
+                        itemCount: taskController.filteredTasks.length,
+                        itemBuilder: (context, index) {
+                          final task =
+                              taskController.filteredTasks[index];
+
+                          return TaskCard(
+                            task: task,
+                            onToggle: () =>
+                                taskController.toggleTaskStatus(task),
+                            onEdit: () {
+                              taskController.setEditingTask(task);
+                              Get.toNamed(AppRoutes.editTask);
+                            },
+                            onDelete: () {
+                              DialogHelper.showConfirmation(
+                                title: "Delete Task",
+                                message:
+                                    "This task will be permanently deleted.",
+                                confirmText: "Delete",
+                                isDanger: true,
+                                onConfirm: () =>
+                                    taskController.deleteTask(task.id),
+                              );
+                            },
+                          );
+                        },
+                        separatorBuilder: (_, __) => AppSpacing.gapLg,
+                      ),
+          ),
+        ),
+      ],
+    ),
+  ),
+     ), );
   }
 }
