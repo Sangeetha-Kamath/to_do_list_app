@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
+import 'package:to_do_list_app/core/routes/app_pages.dart';
+import 'package:to_do_list_app/core/routes/app_routes.dart';
+import 'package:to_do_list_app/screens/login/controller/bindings/auth_binding.dart';
 import 'core/theme/app_theme.dart';
 import 'firebase_options.dart';
+import 'screens/login/welcome_screen.dart';
+import 'screens/login/widgets/splash_screen.dart';
 import 'services/dio_service.dart';
 
 Future<void> main() async {
@@ -24,14 +29,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: "TaskFlow",
       theme: AppTheme.lightTheme,
-      home:  Scaffold(
-        body: Center(
-          child: Text(
-  "TaskFlow",
-  style: Theme.of(context).textTheme.headlineLarge,
-)
-        ),
-      ),
+      getPages: AppPages.routes,
+      initialBinding: AuthBinding(),
+      initialRoute: AppRoutes.splash,
+     
     );
   }
 }
