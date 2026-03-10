@@ -6,8 +6,10 @@ import 'package:to_do_list_app/core/routes/app_pages.dart';
 import 'package:to_do_list_app/core/routes/app_routes.dart';
 import 'package:to_do_list_app/features/login/controller/bindings/auth_binding.dart';
 import 'core/theme/app_theme.dart';
+import 'features/login/services/auth_service.dart';
 import 'firebase_options.dart';
 import 'services/dio_service.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,11 +21,18 @@ Future<void> main() async {
   options: DefaultFirebaseOptions.currentPlatform,
 );
 DioService().initialize();
-  runApp(const MyApp());
+  final user = AuthService.instance.currentUser;
+
+  final initialRoute =
+      user != null ? AppRoutes.home : AppRoutes.welcome;
+
+  runApp(MyApp(initialRoute: initialRoute));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final String initialRoute;
+
+  const MyApp({super.key,  this.initialRoute = AppRoutes.welcome});
 
   // This widget is the root of your application.
   @override
@@ -34,7 +43,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       getPages: AppPages.routes,
       initialBinding: AuthBinding(),
-      initialRoute: AppRoutes.splash,
+      initialRoute: initialRoute
      
     );
   }
