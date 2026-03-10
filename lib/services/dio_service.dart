@@ -1,17 +1,23 @@
 import 'package:dio/dio.dart';
 
+import '../core/constants/api_constants.dart';
+
 
 class DioService{
    static final DioService _instance = DioService._internal();
    factory DioService()=>_instance;
    DioService._internal();
-   late final Dio dio;
+   late final Dio _dio;
+   Dio get dio {
+    return _dio;
+  }
    void initialize(){
-    dio= Dio(BaseOptions(baseUrl:'',
+    _dio= Dio(BaseOptions(baseUrl:ApiConstants.baseUrl,
     connectTimeout: const Duration(milliseconds: 3000),
     receiveTimeout: const Duration(milliseconds: 30000),
+    responseType: ResponseType.json,
     headers: {
-      "content-type":"application/json",
+      "Content-Type":"application/json",
       
     } ))..interceptors.add(LogInterceptor(
       error: true,
