@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/widgets/app_text_field.dart';
-import '../../../../core/widgets/password_text_field.dart';
-import '../../../../core/widgets/primary_button.dart';
+import '../../../../../../core/theme/app_colors.dart';
+import '../../../../../../core/theme/app_spacing.dart';
+import '../../../../../../core/widgets/app_text_field.dart';
+import '../../../../../../core/widgets/password_text_field.dart';
+import '../../../../../../core/widgets/primary_button.dart';
 
-import '../../core/routes/app_routes.dart';
-import 'controller/auth_controller.dart';
-import 'signup_screen.dart';
-import 'widgets/auth_header.dart';
+import '../../../../core/routes/app_routes.dart';
+import '../../controller/auth_controller.dart';
+import '../../widgets/auth_header.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});

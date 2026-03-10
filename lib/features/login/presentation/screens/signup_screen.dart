@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:to_do_list_app/core/theme/app_radius.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/widgets/app_text_field.dart';
-import '../../../../core/widgets/password_text_field.dart';
-import '../../../../core/widgets/primary_button.dart';
-import '../../core/routes/app_routes.dart';
-import 'controller/auth_controller.dart';
+import '../../../../../../core/theme/app_colors.dart';
+import '../../../../../../core/theme/app_spacing.dart';
+import '../../../../../../core/widgets/app_text_field.dart';
+import '../../../../../../core/widgets/password_text_field.dart';
+import '../../../../../../core/widgets/primary_button.dart';
+import '../../../../core/routes/app_routes.dart';
+import '../../controller/auth_controller.dart';
 import 'login_screen.dart';
-import 'widgets/auth_header.dart';
+import '../../widgets/auth_header.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
@@ -88,7 +88,10 @@ class SignUpScreen extends StatelessWidget {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () => Get.offNamed(AppRoutes.login),
+                        onTap: () {
+                          controller.clearSignupFields();
+                           Get.offNamed(AppRoutes.login);
+                        },
                         child: Text(
                           'Log In',
                           style: textTheme.bodyMedium?.copyWith(

@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
-
-import '../../screens/home/home_screen.dart' show HomeScreen;
-import '../../screens/login/controller/bindings/auth_binding.dart';
-import '../../screens/login/login_screen.dart';
-import '../../screens/login/signup_screen.dart';
-import '../../screens/login/welcome_screen.dart';
-import '../../screens/login/widgets/splash_screen.dart';
+import 'package:to_do_list_app/features/tasks/presentation/screens/edit_task_screen.dart';
+import '../../features/login/presentation/screens/login_screen.dart';
+import '../../features/login/presentation/screens/signup_screen.dart';
+import '../../features/login/presentation/screens/welcome_screen.dart';
+import '../../features/login/widgets/splash_screen.dart';
+import '../../features/tasks/controller/bindings/task_binding.dart';
+import '../../features/tasks/presentation/screens/home_screen.dart';
 import 'app_routes.dart';
 
 class AppPages {
@@ -19,6 +19,7 @@ class AppPages {
     GetPage(
       name: AppRoutes.welcome,
       page: () => const WelcomeScreen(),
+      
     
     ),
     GetPage(
@@ -36,6 +37,9 @@ class AppPages {
     GetPage(
       name: AppRoutes.home,
       page: () => const HomeScreen(),
+      binding:TaskBinding()
     ),
+    GetPage(name:AppRoutes.editTask,
+    page: ()=>const EditTaskScreen())
   ];
 }
