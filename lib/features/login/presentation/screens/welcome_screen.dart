@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_radius.dart';
-import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/widgets/app_outlined_button.dart';
-import '../../../../core/widgets/primary_button.dart';
+import '../../../../../../core/theme/app_colors.dart';
+import '../../../../../../core/theme/app_radius.dart';
+import '../../../../../../core/theme/app_spacing.dart';
+import '../../../../../../core/widgets/app_outlined_button.dart';
+import '../../../../../../core/widgets/primary_button.dart';
 import 'login_screen.dart';
 import 'signup_screen.dart';
-import 'widgets/auth_header.dart';
+import '../../widgets/auth_header.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});

@@ -101,7 +101,7 @@ void clearSignupFields() {
         email: loginEmailController.text,
         password: loginPasswordController.text,
       );
-
+clearLoginFields();
       Get.offAllNamed(AppRoutes.home);
 
       Get.snackbar(
@@ -141,6 +141,7 @@ void clearSignupFields() {
       await credential.user?.updateDisplayName(
         signupNameController.text.trim(),
       );
+      clearSignupFields();
 
       Get.offAllNamed(AppRoutes.home);
 

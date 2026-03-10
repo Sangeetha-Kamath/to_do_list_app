@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:to_do_list_app/core/routes/app_pages.dart';
 import 'package:to_do_list_app/core/routes/app_routes.dart';
-import 'package:to_do_list_app/screens/login/controller/bindings/auth_binding.dart';
+import 'package:to_do_list_app/features/login/controller/bindings/auth_binding.dart';
 import 'core/theme/app_theme.dart';
 import 'firebase_options.dart';
-import 'screens/login/welcome_screen.dart';
-import 'screens/login/widgets/splash_screen.dart';
 import 'services/dio_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+    await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
+
  await Firebase.initializeApp(
   options: DefaultFirebaseOptions.currentPlatform,
 );
